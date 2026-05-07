@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
-    /* ── Variables ──────────────────────────────── */
+    
     :root {
       --bg-primary:   #02060d;
       --bg-secondary: #060f1e;
@@ -29,7 +29,7 @@
       --tr:           .35s cubic-bezier(0.16,1,0.3,1);
     }
 
-    /* ── Reset & base ───────────────────────────── */
+    
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html   { scroll-behavior: smooth; scroll-padding-top: 78px; }
     body   {
@@ -45,7 +45,7 @@
     ::-webkit-scrollbar-thumb   { background: rgba(0,212,255,.22); border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-    /* ── Grid overlay ───────────────────────────── */
+    
     .grid-bg {
       position: absolute; inset: 0; pointer-events: none;
       background-image:
@@ -54,7 +54,7 @@
       background-size: 60px 60px;
     }
 
-    /* ── Cursor glow ────────────────────────────── */
+    
     .cursor-glow {
       position: fixed; pointer-events: none; z-index: 0;
       width: 560px; height: 560px; border-radius: 50%;
@@ -63,7 +63,7 @@
       transition: left .1s linear, top .1s linear;
     }
 
-    /* ── Reveal ─────────────────────────────────── */
+    
     [data-reveal] {
       opacity: 0;
       transform: translateY(26px);
@@ -79,7 +79,7 @@
     .stagger [data-reveal]:nth-child(7) { transition-delay: .48s; }
     .stagger [data-reveal]:nth-child(8) { transition-delay: .55s; }
 
-    /* ── Glass card ─────────────────────────────── */
+    
     .card {
       background: var(--bg-card);
       backdrop-filter: blur(20px) saturate(160%);
@@ -93,7 +93,7 @@
       box-shadow: 0 0 28px var(--accent-glow), 0 18px 50px rgba(0,0,0,.48);
     }
 
-    /* ── Section tag ────────────────────────────── */
+    
     .tag {
       display: inline-flex; align-items: center; gap: 8px;
       font-size: 11px; letter-spacing: .10em; text-transform: uppercase;
@@ -101,11 +101,11 @@
     }
     .tag::before { content:''; display:block; width:22px; height:1px; background:var(--accent); }
 
-    /* ── Headline sizes ─────────────────────────── */
+    
     .h-display { font-family:'Syne',sans-serif; font-weight:800; line-height:1.05; letter-spacing:-.03em; font-size: clamp(64px,10vw,128px); }
     .h-section  { font-family:'Syne',sans-serif; font-weight:700; line-height:1.15; letter-spacing:-.02em; font-size: clamp(30px,5vw,50px); }
 
-    /* ── Buttons ────────────────────────────────── */
+    
     .btn-p, .btn-s {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 11px 26px; border-radius: 8px; cursor: pointer;
@@ -118,7 +118,7 @@
     .btn-s { background: transparent; border-color: rgba(226,232,240,.15); color: var(--text-2); }
     .btn-s:hover { border-color: rgba(226,232,240,.34); color: var(--text); transform: translateY(-2px); }
 
-    /* ── Navigation ─────────────────────────────── */
+    
     #nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between;
@@ -159,7 +159,7 @@
       }
     }
 
-    /* ── Hero ───────────────────────────────────── */
+    
     #hero {
       position: relative; min-height: 100svh;
       display: flex; align-items: center; overflow: hidden;
@@ -174,7 +174,7 @@
 
     .hero-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px; width: 100%; }
 
-    /* Glitch */
+    
     .glitch { position: relative; color: var(--text); }
     .glitch::before, .glitch::after {
       content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -205,13 +205,13 @@
     .scroll-line-inner { position: absolute; top: 0; left: 0; width: 100%; height: 40%; background: var(--accent); animation: sl 1.8s ease-in-out infinite; }
     @keyframes sl { 0%{transform:translateY(-100%)} 100%{transform:translateY(300%)} }
 
-    /* ── Sections layout ────────────────────────── */
+    
     section.pad { padding: 112px 0; overflow: hidden; position: relative; }
     .inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
 
     @media (max-width: 640px) { .inner { padding: 0 20px; } section.pad { padding: 72px 0; } .hero-content { padding: 110px 20px 60px; } }
 
-    /* ── About ──────────────────────────────────── */
+    
     #about { background: var(--bg-secondary); }
     .about-grid { display: grid; gap: 56px; }
     @media (min-width: 900px) { .about-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
@@ -234,7 +234,7 @@
     .area-title { font-family: 'Syne',sans-serif; font-weight:600; font-size: 14px; color: var(--text); margin-bottom: 6px; }
     .area-desc  { font-size: 12px; color: var(--text-2); line-height: 1.72; }
 
-    /* ── Skills ─────────────────────────────────── */
+    
     #skills { background: var(--bg-primary); }
     .skills-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
     @media (min-width: 768px)  { .skills-grid { grid-template-columns: repeat(4, 1fr); } }
@@ -249,7 +249,7 @@
     .bar-bg { height: 3px; border-radius: 99px; background: rgba(255,255,255,.06); overflow: hidden; }
     .bar-fg { height: 100%; border-radius: 99px; }
 
-    /* ── Projects ───────────────────────────────── */
+    
     #projects { background: var(--bg-secondary); }
     .projects-grid { display: grid; gap: 20px; }
     @media (min-width: 768px) { .projects-grid { grid-template-columns: repeat(3,1fr); } }
@@ -265,7 +265,7 @@
     .proj-link { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-3); cursor: pointer; background: none; border: none; font-family: inherit; transition: color var(--tr); padding: 0; }
     .proj-link:hover { color: var(--accent); }
 
-    /* ── Contact ────────────────────────────────── */
+    
     #contact { background: var(--bg-primary); }
     .contact-grid { display: grid; gap: 56px; }
     @media (min-width: 900px) { .contact-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
@@ -292,7 +292,7 @@
     .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
     .form-textarea { min-height: 130px; resize: vertical; }
 
-    /* ── Footer ─────────────────────────────────── */
+    
     footer {
       background: var(--bg-secondary); padding: 36px 40px;
       border-top: 1px solid rgba(0,212,255,.07);
@@ -309,10 +309,8 @@
 </head>
 <body>
 
-<!-- Cursor glow -->
 <div class="cursor-glow" id="cg"></div>
 
-<!-- ══ NAVIGATION ══ -->
 <nav id="nav">
   <a href="#" class="nav-logo">&lt;BreachV3 /&gt;</a>
   <button class="burger" id="burger" aria-label="Menü öffnen">
@@ -327,7 +325,6 @@
   </div>
 </nav>
 
-<!-- ══ HERO ══ -->
 <section id="hero">
   <canvas id="hero-canvas"></canvas>
   <div class="grid-bg"></div>
@@ -374,12 +371,11 @@
   </div>
 </section>
 
-<!-- ══ ABOUT ══ -->
 <section id="about" class="pad">
   <div class="grid-bg"></div>
   <div class="inner">
     <div class="about-grid">
-      <!-- Left -->
+      
       <div>
         <div class="tag" data-reveal>Über mich</div>
         <h2 class="h-section" data-reveal>
@@ -415,7 +411,7 @@
         </div>
       </div>
 
-      <!-- Right: area cards -->
+      
       <div class="area-cards stagger">
         <div class="card area-card" data-reveal>
           <div class="area-icon">
@@ -450,7 +446,6 @@
   </div>
 </section>
 
-<!-- ══ SKILLS ══ -->
 <section id="skills" class="pad" style="background:var(--bg-primary)">
   <div class="grid-bg"></div>
   <div class="inner">
@@ -464,7 +459,6 @@
   </div>
 </section>
 
-<!-- ══ PROJECTS ══ -->
 <section id="projects" class="pad" style="background:var(--bg-secondary)">
   <div class="grid-bg"></div>
   <div class="inner">
@@ -482,12 +476,11 @@
   </div>
 </section>
 
-<!-- ══ CONTACT ══ -->
 <section id="contact" class="pad" style="background:var(--bg-primary)">
   <div class="grid-bg"></div>
   <div class="inner">
     <div class="contact-grid">
-      <!-- Left -->
+      
       <div>
         <div class="tag" data-reveal>Kontakt</div>
         <h2 class="h-section" data-reveal>Lass uns <span style="color:var(--accent)">zusammenarbeiten</span></h2>
@@ -517,7 +510,7 @@
         </div>
       </div>
 
-      <!-- Right: form -->
+      
       <div data-reveal>
         <form class="card form-card" id="contact-form">
           <div class="form-row">
@@ -549,20 +542,16 @@
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
 <footer>
   <a href="#" class="logo">&lt;BreachV3 /&gt;</a>
   <span class="copy">© 2026 BreachV3 — Alle Rechte vorbehalten</span>
   <span class="built">Gebaut mit <span>Three.js</span> &amp; <span>Vanilla JS</span></span>
 </footer>
 
-<!-- Three.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
-/* ══════════════════════════════════════════
-   DATA
-══════════════════════════════════════════ */
+
 const SKILLS = [
   { name:'React',       level:90, cat:'Frontend',  icon:'⚛',  color:'#61dafb' },
   { name:'JavaScript',  level:92, cat:'Language',  icon:'JS', color:'#f7df1e' },
@@ -595,9 +584,6 @@ const PROJECTS = [
   },
 ];
 
-/* ══════════════════════════════════════════
-   RENDER: Skills
-══════════════════════════════════════════ */
 (function renderSkills() {
   const grid = document.getElementById('skills-grid');
   SKILLS.forEach(s => {
@@ -614,7 +600,7 @@ const PROJECTS = [
       </div>
       <div class="bar-bg"><div class="bar-fg" style="width:${s.level}%;background:linear-gradient(90deg,${s.color}80,${s.color});box-shadow:0 0 8px ${s.color}44"></div></div>
     `;
-    // 3D tilt
+
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
@@ -628,9 +614,6 @@ const PROJECTS = [
   });
 })();
 
-/* ══════════════════════════════════════════
-   RENDER: Projects
-══════════════════════════════════════════ */
 (function renderProjects() {
   const grid = document.getElementById('projects-grid');
   PROJECTS.forEach(p => {
@@ -654,9 +637,6 @@ const PROJECTS = [
   });
 })();
 
-/* ══════════════════════════════════════════
-   THREE.JS HERO CANVAS
-══════════════════════════════════════════ */
 (function initCanvas() {
   const canvas = document.getElementById('hero-canvas');
   const isMobile = window.innerWidth < 768;
@@ -670,7 +650,6 @@ const PROJECTS = [
   renderer.setClearColor(0x000000, 0);
   camera.position.z = 26;
 
-  // Particles
   const pos = new Float32Array(count * 3);
   for (let i = 0; i < count; i++) {
     pos[i*3]   = (Math.random() - 0.5) * 65;
@@ -683,7 +662,6 @@ const PROJECTS = [
   const points = new THREE.Points(pGeo, pMat);
   scene.add(points);
 
-  // Network lines
   const maxDist = isMobile ? 9 : 13;
   const maxLines = isMobile ? 300 : 1000;
   const lverts = [];
@@ -703,7 +681,6 @@ const PROJECTS = [
   const lines = new THREE.LineSegments(lGeo, lMat);
   scene.add(lines);
 
-  // Mouse parallax
   let mx = 0, my = 0;
   if (!isMobile) {
     window.addEventListener('mousemove', e => {
@@ -712,7 +689,6 @@ const PROJECTS = [
     });
   }
 
-  // Animate
   (function animate() {
     requestAnimationFrame(animate);
     points.rotation.y += 0.00018;
@@ -732,9 +708,6 @@ const PROJECTS = [
   });
 })();
 
-/* ══════════════════════════════════════════
-   TYPEWRITER
-══════════════════════════════════════════ */
 (function typewriter() {
   const el = document.getElementById('tw');
   const roles = ['Frontend Developer','Cybersecurity Specialist','Bot Developer','Software Engineer'];
@@ -746,13 +719,10 @@ const PROJECTS = [
     else if (del && ci > 0) { el.textContent = target.slice(0, --ci); }
     else if (del && ci === 0) { del = false; ri = (ri+1) % roles.length; }
   }, 55);
-  // faster delete
+
   setInterval(() => { if (del && ci > 0) { el.textContent = roles[ri].slice(0, --ci); } }, 25);
 })();
 
-/* ══════════════════════════════════════════
-   NAVIGATION
-══════════════════════════════════════════ */
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
@@ -765,26 +735,17 @@ document.querySelectorAll('#nav-links a').forEach(a => {
   a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open'));
 });
 
-/* ══════════════════════════════════════════
-   CURSOR GLOW
-══════════════════════════════════════════ */
 const cg = document.getElementById('cg');
 window.addEventListener('mousemove', e => {
   cg.style.left = e.clientX + 'px';
   cg.style.top  = e.clientY + 'px';
 });
 
-/* ══════════════════════════════════════════
-   SCROLL REVEAL
-══════════════════════════════════════════ */
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.10 });
 document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
 
-/* ══════════════════════════════════════════
-   CONTACT FORM
-══════════════════════════════════════════ */
 document.getElementById('contact-form').addEventListener('submit', function(e) {
   e.preventDefault();
   const d = new FormData(this);

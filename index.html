@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BreachV3 – Frontend Developer, Cybersecurity Specialist & Software Engineer" />
+  <title>BreachV3 | Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Variables ──────────────────────────────── */
+    :root {
+      --bg-primary:   #02060d;
+      --bg-secondary: #060f1e;
+      --bg-card:      rgba(6, 15, 30, 0.75);
+      --border:       rgba(0, 212, 255, 0.10);
+      --border-h:     rgba(0, 212, 255, 0.32);
+      --accent:       #00d4ff;
+      --accent-g:     #00ff9d;
+      --accent-glow:  rgba(0, 212, 255, 0.12);
+      --text:         #e2e8f0;
+      --text-2:       rgba(226,232,240,0.58);
+      --text-3:       rgba(226,232,240,0.30);
+      --r:            12px;
+      --ease:         cubic-bezier(0.16,1,0.3,1);
+      --tr:           .35s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* ── Reset & base ───────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html   { scroll-behavior: smooth; scroll-padding-top: 78px; }
+    body   {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-primary);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar         { width: 5px; }
+    ::-webkit-scrollbar-track   { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb   { background: rgba(0,212,255,.22); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* ── Grid overlay ───────────────────────────── */
+    .grid-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,212,255,.030) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,.030) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── Cursor glow ────────────────────────────── */
+    .cursor-glow {
+      position: fixed; pointer-events: none; z-index: 0;
+      width: 560px; height: 560px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,212,255,.055) 0%, transparent 70%);
+      transform: translate(-50%,-50%);
+      transition: left .1s linear, top .1s linear;
+    }
+
+    /* ── Reveal ─────────────────────────────────── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .72s var(--ease), transform .72s var(--ease);
+    }
+    [data-reveal].visible { opacity: 1; transform: translateY(0); }
+    .stagger [data-reveal]:nth-child(1) { transition-delay: .06s; }
+    .stagger [data-reveal]:nth-child(2) { transition-delay: .13s; }
+    .stagger [data-reveal]:nth-child(3) { transition-delay: .20s; }
+    .stagger [data-reveal]:nth-child(4) { transition-delay: .27s; }
+    .stagger [data-reveal]:nth-child(5) { transition-delay: .34s; }
+    .stagger [data-reveal]:nth-child(6) { transition-delay: .41s; }
+    .stagger [data-reveal]:nth-child(7) { transition-delay: .48s; }
+    .stagger [data-reveal]:nth-child(8) { transition-delay: .55s; }
+
+    /* ── Glass card ─────────────────────────────── */
+    .card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      transition: border-color var(--tr), box-shadow var(--tr), transform var(--tr);
+    }
+    .card:hover {
+      border-color: var(--border-h);
+      box-shadow: 0 0 28px var(--accent-glow), 0 18px 50px rgba(0,0,0,.48);
+    }
+
+    /* ── Section tag ────────────────────────────── */
+    .tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; letter-spacing: .10em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 14px;
+    }
+    .tag::before { content:''; display:block; width:22px; height:1px; background:var(--accent); }
+
+    /* ── Headline sizes ─────────────────────────── */
+    .h-display { font-family:'Syne',sans-serif; font-weight:800; line-height:1.05; letter-spacing:-.03em; font-size: clamp(64px,10vw,128px); }
+    .h-section  { font-family:'Syne',sans-serif; font-weight:700; line-height:1.15; letter-spacing:-.02em; font-size: clamp(30px,5vw,50px); }
+
+    /* ── Buttons ────────────────────────────────── */
+    .btn-p, .btn-s {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 26px; border-radius: 8px; cursor: pointer;
+      font-family: inherit; font-size: 13.5px; font-weight: 500;
+      letter-spacing: .05em; text-decoration: none; border: 1px solid;
+      transition: all var(--tr);
+    }
+    .btn-p { background: rgba(0,212,255,.08); border-color: rgba(0,212,255,.35); color: var(--accent); }
+    .btn-p:hover { background: rgba(0,212,255,.17); border-color: var(--accent); box-shadow: 0 0 22px rgba(0,212,255,.22); transform: translateY(-2px); }
+    .btn-s { background: transparent; border-color: rgba(226,232,240,.15); color: var(--text-2); }
+    .btn-s:hover { border-color: rgba(226,232,240,.34); color: var(--text); transform: translateY(-2px); }
+
+    /* ── Navigation ─────────────────────────────── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between;
+      transition: background var(--tr), backdrop-filter var(--tr), border-color var(--tr);
+      border-bottom: 1px solid transparent;
+    }
+    #nav.scrolled {
+      background: rgba(2,6,13,.88);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom-color: rgba(0,212,255,.07);
+    }
+    .nav-logo {
+      font-size: 18px; font-weight: 700; letter-spacing: .10em;
+      color: var(--accent-g); text-shadow: 0 0 16px rgba(0,255,157,.40);
+      text-decoration: none; transition: opacity var(--tr);
+    }
+    .nav-logo:hover { opacity: .8; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a {
+      font-size: 13px; letter-spacing: .04em; color: var(--text-2);
+      text-decoration: none; transition: color var(--tr);
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .burger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .burger span { display: block; width: 22px; height: 1px; background: var(--text-2); margin: 5px 0; transition: all .3s ease; }
+
+    @media (max-width: 768px) {
+      #nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .burger { display: block; }
+      .nav-links.open {
+        display: flex; flex-direction: column; align-items: flex-start;
+        position: absolute; top: 72px; left: 0; right: 0;
+        background: rgba(2,6,13,.96); backdrop-filter: blur(20px);
+        padding: 20px 24px 24px; border-bottom: 1px solid rgba(0,212,255,.07);
+        gap: 16px;
+      }
+    }
+
+    /* ── Hero ───────────────────────────────────── */
+    #hero {
+      position: relative; min-height: 100svh;
+      display: flex; align-items: center; overflow: hidden;
+    }
+    #hero-canvas { position: absolute; inset: 0; }
+    .scan-line {
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: .35; animation: scan 7s linear infinite; pointer-events: none;
+    }
+    @keyframes scan { 0%{ top:0; } 100%{ top:100%; } }
+
+    .hero-content { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px; width: 100%; }
+
+    /* Glitch */
+    .glitch { position: relative; color: var(--text); }
+    .glitch::before, .glitch::after {
+      content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    }
+    .glitch::before { color: var(--accent); clip-path: polygon(0 20%,100% 20%,100% 40%,0 40%); animation: gb 5s infinite; opacity: 0; }
+    .glitch::after  { color: var(--accent-g); clip-path: polygon(0 60%,100% 60%,100% 80%,0 80%); animation: ga 5s infinite; opacity: 0; }
+    @keyframes gb { 0%,88%,100%{opacity:0;transform:translate(0)} 90%{opacity:.8;transform:translate(-3px,1px)} 93%{opacity:.8;transform:translate(3px,-1px)} 96%{opacity:0} }
+    @keyframes ga { 0%,88%,100%{opacity:0;transform:translate(0)} 91%{opacity:.7;transform:translate(3px,2px)} 94%{opacity:.7;transform:translate(-2px,-1px)} 97%{opacity:0} }
+
+    .typewriter { font-size: clamp(16px,2.5vw,23px); color: var(--accent); margin: 16px 0 20px; }
+    .typewriter .prompt { color: var(--text-3); }
+    .cursor { display: inline-block; width: 2px; height: 1.1em; background: var(--accent); vertical-align: middle; margin-left: 1px; animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-desc { font-size: 15px; color: var(--text-2); line-height: 1.85; max-width: 520px; margin-bottom: 36px; }
+    .hero-ctas  { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 56px; }
+
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 36px; }
+    .stat-val { font-family:'Syne',sans-serif; font-weight:700; color:var(--accent); font-size: clamp(28px,4vw,40px); line-height:1; }
+    .stat-label { font-size: 11px; color: var(--text-3); letter-spacing: .08em; text-transform: uppercase; margin-top: 4px; }
+
+    .scroll-ind {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 2;
+    }
+    .scroll-ind span { font-size: 10px; letter-spacing: .12em; color: var(--text-3); }
+    .scroll-line-wrap { width: 1px; height: 40px; background: rgba(0,212,255,.12); position: relative; overflow: hidden; }
+    .scroll-line-inner { position: absolute; top: 0; left: 0; width: 100%; height: 40%; background: var(--accent); animation: sl 1.8s ease-in-out infinite; }
+    @keyframes sl { 0%{transform:translateY(-100%)} 100%{transform:translateY(300%)} }
+
+    /* ── Sections layout ────────────────────────── */
+    section.pad { padding: 112px 0; overflow: hidden; position: relative; }
+    .inner { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+    @media (max-width: 640px) { .inner { padding: 0 20px; } section.pad { padding: 72px 0; } .hero-content { padding: 110px 20px 60px; } }
+
+    /* ── About ──────────────────────────────────── */
+    #about { background: var(--bg-secondary); }
+    .about-grid { display: grid; gap: 56px; }
+    @media (min-width: 900px) { .about-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+    .terminal {
+      background: rgba(0,8,20,.70); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 20px; font-size: 13px; margin-top: 28px;
+    }
+    .term-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .dot { width: 11px; height: 11px; border-radius: 50%; }
+    .dot-r { background:#ff5f57; } .dot-y { background:#febc2e; } .dot-g { background:#28c840; }
+    .term-title { margin-left: 8px; font-size: 11px; color: var(--text-3); }
+    .term-body { line-height: 1.9; }
+    .kw { color: var(--accent); } .str { color: var(--accent-g); } .dim { color: var(--text-3); }
+
+    .area-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 480px) { .area-cards { grid-template-columns: 1fr; } }
+    .area-card { padding: 18px; }
+    .area-icon { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: var(--accent-glow); border: 1px solid var(--border); color: var(--accent); margin-bottom: 12px; }
+    .area-title { font-family: 'Syne',sans-serif; font-weight:600; font-size: 14px; color: var(--text); margin-bottom: 6px; }
+    .area-desc  { font-size: 12px; color: var(--text-2); line-height: 1.72; }
+
+    /* ── Skills ─────────────────────────────────── */
+    #skills { background: var(--bg-primary); }
+    .skills-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 768px)  { .skills-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .skill-card { padding: 18px; cursor: default; transform-style: preserve-3d; will-change: transform; }
+    .skill-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .skill-meta { display: flex; align-items: center; gap: 10px; }
+    .skill-icon { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 14px; font-weight: 700; }
+    .skill-name  { font-family:'Syne',sans-serif; font-weight:600; font-size: 13.5px; color: var(--text); }
+    .skill-cat   { font-size: 11px; color: var(--text-3); letter-spacing: .06em; margin-top: 1px; }
+    .skill-pct   { font-size: 11px; font-weight: 600; }
+    .bar-bg { height: 3px; border-radius: 99px; background: rgba(255,255,255,.06); overflow: hidden; }
+    .bar-fg { height: 100%; border-radius: 99px; }
+
+    /* ── Projects ───────────────────────────────── */
+    #projects { background: var(--bg-secondary); }
+    .projects-grid { display: grid; gap: 20px; }
+    @media (min-width: 768px) { .projects-grid { grid-template-columns: repeat(3,1fr); } }
+
+    .proj-card { padding: 24px; display: flex; flex-direction: column; }
+    .proj-top  { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
+    .proj-icon { width: 46px; height: 46px; font-size: 22px; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid var(--border); }
+    .proj-status { font-size: 11px; padding: 4px 10px; border-radius: 99px; letter-spacing: .05em; font-weight: 500; }
+    .proj-name { font-family:'Syne',sans-serif; font-weight:700; font-size: 19px; color: var(--text); margin-bottom: 10px; }
+    .proj-desc { font-size: 12.5px; color: var(--text-2); line-height: 1.78; flex: 1; margin-bottom: 16px; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+    .proj-tag  { font-size: 11px; padding: 3px 9px; border-radius: 4px; color: var(--accent); background: var(--accent-glow); border: 1px solid var(--border); letter-spacing: .04em; }
+    .proj-link { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-3); cursor: pointer; background: none; border: none; font-family: inherit; transition: color var(--tr); padding: 0; }
+    .proj-link:hover { color: var(--accent); }
+
+    /* ── Contact ────────────────────────────────── */
+    #contact { background: var(--bg-primary); }
+    .contact-grid { display: grid; gap: 56px; }
+    @media (min-width: 900px) { .contact-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+
+    .info-item { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .info-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: var(--accent-glow); border: 1px solid var(--border); color: var(--accent); flex-shrink: 0; }
+    .info-lbl { font-size: 10px; color: var(--text-3); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 2px; }
+    .info-val { font-size: 13.5px; color: var(--text); }
+
+    .online-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--accent-g); box-shadow: 0 0 8px rgba(0,255,157,.55); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.38} }
+
+    .form-card { padding: 28px; }
+    .form-row { display: grid; gap: 16px; margin-bottom: 16px; }
+    @media (min-width: 480px) { .form-row { grid-template-columns: 1fr 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label { font-size: 10px; color: var(--text-3); letter-spacing: .08em; text-transform: uppercase; }
+    .form-input, .form-textarea {
+      padding: 11px 14px; background: rgba(0,8,22,.65);
+      border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text); font-family: inherit; font-size: 13.5px;
+      outline: none; transition: border-color .2s ease; resize: none;
+    }
+    .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+    .form-textarea { min-height: 130px; resize: vertical; }
+
+    /* ── Footer ─────────────────────────────────── */
+    footer {
+      background: var(--bg-secondary); padding: 36px 40px;
+      border-top: 1px solid rgba(0,212,255,.07);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 14px; max-width: 100%;
+    }
+    footer .logo { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; color:var(--accent-g); text-shadow:0 0 12px rgba(0,255,157,.32); text-decoration:none; }
+    footer .copy { font-size: 11px; color: var(--text-3); }
+    footer .built { font-size: 11px; color: var(--text-3); }
+    footer .built span { color: var(--accent); }
+
+    @media (max-width: 640px) { footer { padding: 28px 20px; justify-content: center; text-align: center; } }
+  </style>
+</head>
+<body>
+
+<!-- Cursor glow -->
+<div class="cursor-glow" id="cg"></div>
+
+<!-- ══ NAVIGATION ══ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">&lt;BreachV3 /&gt;</a>
+  <button class="burger" id="burger" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="#about">Über mich</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projekte</a>
+    <a href="#contact">Kontakt</a>
+    <a href="#contact" class="btn-p" style="padding:8px 18px;font-size:12.5px;">Hire Me</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="grid-bg"></div>
+  <div class="scan-line"></div>
+
+  <div class="hero-content">
+    <div class="tag" data-reveal>&lt; Willkommen /&gt;</div>
+
+    <h1 class="h-display glitch" data-text="BreachV3" data-reveal>BreachV3</h1>
+
+    <div class="typewriter" data-reveal>
+      <span class="prompt">$ </span><span id="tw"></span><span class="cursor"></span>
+    </div>
+
+    <p class="hero-desc" data-reveal>
+      Ich entwickle digitale Systeme an der Schnittstelle von
+      <span style="color:var(--accent-g)">Frontend-Entwicklung</span>,
+      <span style="color:var(--accent)">Cybersecurity</span> und
+      <span style="color:var(--accent-g)">Automatisierung</span>.
+      Präzise, performant und sicher.
+    </p>
+
+    <div class="hero-ctas" data-reveal>
+      <a href="#projects" class="btn-p">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Projekte ansehen
+      </a>
+      <a href="#contact" class="btn-s">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Kontakt aufnehmen
+      </a>
+    </div>
+
+    <div class="hero-stats stagger" data-reveal>
+      <div data-reveal><div class="stat-val">3+</div><div class="stat-label">Jahre Erfahrung</div></div>
+      <div data-reveal><div class="stat-val">20+</div><div class="stat-label">Projekte</div></div>
+      <div data-reveal><div class="stat-val">8+</div><div class="stat-label">Technologien</div></div>
+    </div>
+  </div>
+
+  <div class="scroll-ind">
+    <span>SCROLL</span>
+    <div class="scroll-line-wrap"><div class="scroll-line-inner"></div></div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about" class="pad">
+  <div class="grid-bg"></div>
+  <div class="inner">
+    <div class="about-grid">
+      <!-- Left -->
+      <div>
+        <div class="tag" data-reveal>Über mich</div>
+        <h2 class="h-section" data-reveal>
+          Wer steckt hinter<br>
+          <span style="color:var(--accent)">BreachV3</span>?
+        </h2>
+        <p style="font-size:14px;color:var(--text-2);line-height:1.85;margin:22px 0 14px" data-reveal>
+          Ich bin ein leidenschaftlicher Entwickler mit einem breiten Spektrum an Fähigkeiten –
+          von modernen Weboberflächen bis hin zur Analyse und Absicherung digitaler Systeme.
+        </p>
+        <p style="font-size:14px;color:var(--text-2);line-height:1.85;margin-bottom:0" data-reveal>
+          Unter dem Namen <span style="color:var(--accent-g)">BreachV3</span> entwickle ich Software,
+          die nicht nur funktioniert, sondern Systeme auf einem tieferen Niveau versteht.
+          Sicherheit ist kein Nachgedanke – sie ist der Ausgangspunkt.
+        </p>
+
+        <div class="terminal" data-reveal>
+          <div class="term-bar">
+            <span class="dot dot-r"></span>
+            <span class="dot dot-y"></span>
+            <span class="dot dot-g"></span>
+            <span class="term-title">breach@v3 ~ $ cat profile.json</span>
+          </div>
+          <div class="term-body">
+            <span class="kw">{</span><br>
+            &nbsp;&nbsp;<span class="kw">"name"</span>: <span class="str">"BreachV3"</span>,<br>
+            &nbsp;&nbsp;<span class="kw">"role"</span>: <span class="str">"Dev &amp; Security"</span>,<br>
+            &nbsp;&nbsp;<span class="kw">"stack"</span>: [<span class="str">"React"</span>, <span class="str">"Node"</span>, <span class="str">"Rust"</span>],<br>
+            &nbsp;&nbsp;<span class="kw">"focus"</span>: [<span class="str">"Frontend"</span>, <span class="str">"Cybersec"</span>],<br>
+            &nbsp;&nbsp;<span class="kw">"status"</span>: <span class="str">"open to work"</span><br>
+            <span class="kw">}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: area cards -->
+      <div class="area-cards stagger">
+        <div class="card area-card" data-reveal>
+          <div class="area-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div class="area-title">Frontend Development</div>
+          <div class="area-desc">Moderne, performante UIs mit React, Tailwind CSS und Three.js – von der Idee bis zur produktionsreifen Anwendung.</div>
+        </div>
+        <div class="card area-card" data-reveal>
+          <div class="area-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="area-title">Cybersecurity</div>
+          <div class="area-desc">Sicherheitsanalysen, Penetration Testing und sichere Softwareentwicklung – Systeme denken wie ein Angreifer.</div>
+        </div>
+        <div class="card area-card" data-reveal>
+          <div class="area-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          </div>
+          <div class="area-title">Bot Development</div>
+          <div class="area-desc">Automatisierung für Discord, Telegram und individuelle Plattformen – mit Node.js, Python und Lua.</div>
+        </div>
+        <div class="card area-card" data-reveal>
+          <div class="area-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="area-title">Software Engineering</div>
+          <div class="area-desc">Von systemnaher Programmierung in Rust bis hin zu skalierbaren Backend-Services in Node.js und Python.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SKILLS ══ -->
+<section id="skills" class="pad" style="background:var(--bg-primary)">
+  <div class="grid-bg"></div>
+  <div class="inner">
+    <div class="tag" data-reveal>Tech Stack</div>
+    <h2 class="h-section" data-reveal>Skills &amp; <span style="color:var(--accent)">Technologien</span></h2>
+    <p style="font-size:14px;color:var(--text-2);line-height:1.8;max-width:420px;margin:14px 0 42px" data-reveal>
+      Mein Werkzeugkasten – von systemnaher Programmierung bis zu modernen Frontend-Frameworks.
+    </p>
+
+    <div class="skills-grid stagger" id="skills-grid"></div>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section id="projects" class="pad" style="background:var(--bg-secondary)">
+  <div class="grid-bg"></div>
+  <div class="inner">
+    <div class="tag" data-reveal>Projekte</div>
+    <h2 class="h-section" data-reveal>Ausgewählte <span style="color:var(--accent)">Arbeiten</span></h2>
+    <p style="font-size:14px;color:var(--text-2);line-height:1.8;max-width:420px;margin:14px 0 42px" data-reveal>
+      Eine Auswahl aus den Bereichen Security, Automation und Frontend.
+    </p>
+
+    <div class="projects-grid stagger" id="projects-grid"></div>
+
+    <p style="text-align:center;font-size:13px;color:var(--text-3);margin-top:40px" data-reveal>
+      Weitere Projekte auf Anfrage – <a href="#contact" style="color:var(--accent);transition:opacity .2s" onmouseenter="this.style.opacity='.7'" onmouseleave="this.style.opacity='1'">Kontakt aufnehmen</a>
+    </p>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact" class="pad" style="background:var(--bg-primary)">
+  <div class="grid-bg"></div>
+  <div class="inner">
+    <div class="contact-grid">
+      <!-- Left -->
+      <div>
+        <div class="tag" data-reveal>Kontakt</div>
+        <h2 class="h-section" data-reveal>Lass uns <span style="color:var(--accent)">zusammenarbeiten</span></h2>
+        <p style="font-size:14px;color:var(--text-2);line-height:1.85;margin:20px 0 32px" data-reveal>
+          Du hast ein Projekt, eine Idee oder eine Sicherheitsfrage? Ich bin offen für
+          Freelance-Projekte, Kooperationen und spannende Challenges.
+        </p>
+
+        <div data-reveal>
+          <div class="info-item">
+            <div class="info-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div><div class="info-lbl">E-Mail</div><div class="info-val">kontakt@breachv3.dev</div></div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><div class="info-lbl">Status</div><div class="info-val">Offen für neue Projekte</div></div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <div><div class="info-lbl">Reaktionszeit</div><div class="info-val">Innerhalb 24 Stunden</div></div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;margin-top:24px">
+            <span class="online-dot"></span>
+            <span style="font-size:12px;color:var(--text-3)">Online — Verfügbar für neue Projekte</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div data-reveal>
+        <form class="card form-card" id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Name *</label>
+              <input class="form-input" type="text" name="name" placeholder="Dein Name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">E-Mail *</label>
+              <input class="form-input" type="email" name="email" placeholder="deine@email.de" required />
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:16px">
+            <label class="form-label">Betreff</label>
+            <input class="form-input" type="text" name="subject" placeholder="Projekt-Anfrage / Kooperation / ..." />
+          </div>
+          <div class="form-group" style="margin-bottom:20px">
+            <label class="form-label">Nachricht *</label>
+            <textarea class="form-textarea" name="message" placeholder="Beschreibe dein Projekt oder deine Anfrage..." required></textarea>
+          </div>
+          <button type="submit" class="btn-p" style="width:100%;justify-content:center" id="submit-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Nachricht senden
+          </button>
+          <p id="form-msg" style="font-size:12px;text-align:center;margin-top:12px;color:var(--accent-g);display:none"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <a href="#" class="logo">&lt;BreachV3 /&gt;</a>
+  <span class="copy">© 2026 BreachV3 — Alle Rechte vorbehalten</span>
+  <span class="built">Gebaut mit <span>Three.js</span> &amp; <span>Vanilla JS</span></span>
+</footer>
+
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+/* ══════════════════════════════════════════
+   DATA
+══════════════════════════════════════════ */
+const SKILLS = [
+  { name:'React',       level:90, cat:'Frontend',  icon:'⚛',  color:'#61dafb' },
+  { name:'JavaScript',  level:92, cat:'Language',  icon:'JS', color:'#f7df1e' },
+  { name:'Node.js',     level:82, cat:'Backend',   icon:'⬡',  color:'#68a063' },
+  { name:'Python',      level:85, cat:'Language',  icon:'🐍', color:'#4b8bbe' },
+  { name:'Tailwind',    level:94, cat:'Frontend',  icon:'💨', color:'#38bdf8' },
+  { name:'Rust',        level:65, cat:'Systems',   icon:'🦀', color:'#f74c00' },
+  { name:'Lua',         level:78, cat:'Scripting', icon:'🌙', color:'#2d6db5' },
+  { name:'Three.js',    level:72, cat:'Frontend',  icon:'△',  color:'#049ef4' },
+];
+
+const PROJECTS = [
+  {
+    icon:'🛡', name:'CipherShell',
+    desc:'Modulares CLI-Framework für automatisierte Sicherheitsanalysen und Penetration Testing. Integriert verschiedene Scan-Module und exportiert strukturierte Reports.',
+    tags:['Python','CLI','Security','Automation'],
+    status:'In Entwicklung', statusColor:'#00d4ff',
+  },
+  {
+    icon:'🤖', name:'NexusBot',
+    desc:'Vollautomatisierter Bot-Framework für Discord und Telegram. Unterstützt Custom Commands, Moderation, Webhooks und ein Plugin-System für schnelle Erweiterbarkeit.',
+    tags:['Node.js','Discord.js','Lua','Webhooks'],
+    status:'Live', statusColor:'#00ff9d',
+  },
+  {
+    icon:'◉', name:'PortalUI',
+    desc:'Admin-Dashboard mit 3D-Datenvisualisierungen, Echtzeit-Monitoring und responsivem Design. Gebaut mit React, Three.js und einem Node.js-Backend.',
+    tags:['React','Three.js','Node.js','Tailwind'],
+    status:'Abgeschlossen', statusColor:'#a855f7',
+  },
+];
+
+/* ══════════════════════════════════════════
+   RENDER: Skills
+══════════════════════════════════════════ */
+(function renderSkills() {
+  const grid = document.getElementById('skills-grid');
+  SKILLS.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'card skill-card';
+    card.setAttribute('data-reveal','');
+    card.innerHTML = `
+      <div class="skill-top">
+        <div class="skill-meta">
+          <div class="skill-icon" style="background:${s.color}18;border:1px solid ${s.color}30;color:${s.color};font-size:${s.icon.length>2?'15px':'12px'}">${s.icon}</div>
+          <div><div class="skill-name">${s.name}</div><div class="skill-cat">${s.cat}</div></div>
+        </div>
+        <div class="skill-pct" style="color:${s.color}">${s.level}%</div>
+      </div>
+      <div class="bar-bg"><div class="bar-fg" style="width:${s.level}%;background:linear-gradient(90deg,${s.color}80,${s.color});box-shadow:0 0 8px ${s.color}44"></div></div>
+    `;
+    // 3D tilt
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transform = `perspective(600px) rotateX(${-y*10}deg) rotateY(${x*10}deg) translateZ(10px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(600px) rotateX(0) rotateY(0) translateZ(0)';
+    });
+    grid.appendChild(card);
+  });
+})();
+
+/* ══════════════════════════════════════════
+   RENDER: Projects
+══════════════════════════════════════════ */
+(function renderProjects() {
+  const grid = document.getElementById('projects-grid');
+  PROJECTS.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card proj-card';
+    card.setAttribute('data-reveal','');
+    card.innerHTML = `
+      <div class="proj-top">
+        <div class="proj-icon">${p.icon}</div>
+        <span class="proj-status" style="color:${p.statusColor};background:${p.statusColor}18;border:1px solid ${p.statusColor}30">${p.status}</span>
+      </div>
+      <div class="proj-name">${p.name}</div>
+      <div class="proj-desc">${p.desc}</div>
+      <div class="proj-tags">${p.tags.map(t=>`<span class="proj-tag">${t}</span>`).join('')}</div>
+      <button class="proj-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub ansehen
+      </button>
+    `;
+    grid.appendChild(card);
+  });
+})();
+
+/* ══════════════════════════════════════════
+   THREE.JS HERO CANVAS
+══════════════════════════════════════════ */
+(function initCanvas() {
+  const canvas = document.getElementById('hero-canvas');
+  const isMobile = window.innerWidth < 768;
+  const count = isMobile ? 220 : 550;
+
+  const scene    = new THREE.Scene();
+  const camera   = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x000000, 0);
+  camera.position.z = 26;
+
+  // Particles
+  const pos = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
+    pos[i*3]   = (Math.random() - 0.5) * 65;
+    pos[i*3+1] = (Math.random() - 0.5) * 46;
+    pos[i*3+2] = (Math.random() - 0.5) * 30;
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const pMat = new THREE.PointsMaterial({ color: 0x00d4ff, size: 0.09, transparent: true, opacity: 0.72, sizeAttenuation: true });
+  const points = new THREE.Points(pGeo, pMat);
+  scene.add(points);
+
+  // Network lines
+  const maxDist = isMobile ? 9 : 13;
+  const maxLines = isMobile ? 300 : 1000;
+  const lverts = [];
+  let lc = 0;
+  for (let i = 0; i < count && lc < maxLines; i++) {
+    for (let j = i+1; j < count && lc < maxLines; j++) {
+      const dx = pos[i*3]-pos[j*3], dy = pos[i*3+1]-pos[j*3+1], dz = pos[i*3+2]-pos[j*3+2];
+      if (dx*dx+dy*dy+dz*dz < maxDist*maxDist) {
+        lverts.push(pos[i*3],pos[i*3+1],pos[i*3+2], pos[j*3],pos[j*3+1],pos[j*3+2]);
+        lc++;
+      }
+    }
+  }
+  const lGeo = new THREE.BufferGeometry();
+  lGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lverts), 3));
+  const lMat = new THREE.LineBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.065 });
+  const lines = new THREE.LineSegments(lGeo, lMat);
+  scene.add(lines);
+
+  // Mouse parallax
+  let mx = 0, my = 0;
+  if (!isMobile) {
+    window.addEventListener('mousemove', e => {
+      mx = (e.clientX / window.innerWidth  - 0.5) * 0.38;
+      my = (e.clientY / window.innerHeight - 0.5) * 0.38;
+    });
+  }
+
+  // Animate
+  (function animate() {
+    requestAnimationFrame(animate);
+    points.rotation.y += 0.00018;
+    points.rotation.x += 0.00007;
+    lines.rotation.y   += 0.00018;
+    lines.rotation.x   += 0.00007;
+    camera.position.x += (mx - camera.position.x) * 0.04;
+    camera.position.y += (-my - camera.position.y) * 0.04;
+    camera.lookAt(scene.position);
+    renderer.render(scene, camera);
+  })();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+})();
+
+/* ══════════════════════════════════════════
+   TYPEWRITER
+══════════════════════════════════════════ */
+(function typewriter() {
+  const el = document.getElementById('tw');
+  const roles = ['Frontend Developer','Cybersecurity Specialist','Bot Developer','Software Engineer'];
+  let ri = 0, ci = 0, del = false;
+  setInterval(() => {
+    const target = roles[ri];
+    if (!del && ci < target.length) { el.textContent = target.slice(0, ++ci); }
+    else if (!del && ci === target.length) { if (Math.random() < 0.03) del = true; }
+    else if (del && ci > 0) { el.textContent = target.slice(0, --ci); }
+    else if (del && ci === 0) { del = false; ri = (ri+1) % roles.length; }
+  }, 55);
+  // faster delete
+  setInterval(() => { if (del && ci > 0) { el.textContent = roles[ri].slice(0, --ci); } }, 25);
+})();
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+document.getElementById('burger').addEventListener('click', () => {
+  document.getElementById('nav-links').classList.toggle('open');
+});
+
+document.querySelectorAll('#nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('nav-links').classList.remove('open'));
+});
+
+/* ══════════════════════════════════════════
+   CURSOR GLOW
+══════════════════════════════════════════ */
+const cg = document.getElementById('cg');
+window.addEventListener('mousemove', e => {
+  cg.style.left = e.clientX + 'px';
+  cg.style.top  = e.clientY + 'px';
+});
+
+/* ══════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════ */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.10 });
+document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+/* ══════════════════════════════════════════
+   CONTACT FORM
+══════════════════════════════════════════ */
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const d = new FormData(this);
+  const subject = encodeURIComponent(d.get('subject') || 'Kontakt von ' + d.get('name'));
+  const body    = encodeURIComponent(`Name: ${d.get('name')}\nE-Mail: ${d.get('email')}\n\n${d.get('message')}`);
+  window.location.href = `mailto:kontakt@breachv3.dev?subject=${subject}&body=${body}`;
+  const msg = document.getElementById('form-msg');
+  msg.textContent = 'E-Mail-Client geöffnet – ich melde mich bald!';
+  msg.style.display = 'block';
+  this.reset();
+});
+</script>
+</body>
+</html>

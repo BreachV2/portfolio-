@@ -320,6 +320,7 @@
     <a href="#about">Über mich</a>
     <a href="#skills">Skills</a>
     <a href="#projects">Projekte</a>
+    <a href="#certificates">Zertifikate</a>
     <a href="#contact">Kontakt</a>
     <a href="#contact" class="btn-p" style="padding:8px 18px;font-size:12.5px;">Hire Me</a>
   </div>
@@ -476,7 +477,74 @@
   </div>
 </section>
 
-<section id="contact" class="pad" style="background:var(--bg-primary)">
+<section id="certificates" class="pad" style="background:var(--bg-primary)">
+  <div class="grid-bg"></div>
+  <div class="inner">
+    <div class="tag" data-reveal>Zertifikate</div>
+    <h2 class="h-section" data-reveal>Meine <span style="color:var(--accent)">Zertifikate</span></h2>
+    <p style="font-size:14px;color:var(--text-2);line-height:1.8;max-width:420px;margin:14px 0 42px" data-reveal>
+      Abgeschlossene Kurse und Zertifizierungen aus den Bereichen Webentwicklung und mehr.
+    </p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,480px),1fr));gap:28px" class="stagger">
+      <div class="card" data-reveal style="padding:24px;display:flex;flex-direction:column;gap:16px">
+        <div style="overflow:hidden;border-radius:8px;border:1px solid var(--border)">
+          <img
+            src="Legacy Responsive Webdesign.png"
+            alt="freeCodeCamp – Legacy Responsive Web Design V8 Zertifikat"
+            style="width:100%;display:block;transition:transform .4s ease"
+            onmouseenter="this.style.transform='scale(1.03)'"
+            onmouseleave="this.style.transform='scale(1)'"
+          />
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:6px">freeCodeCamp</div>
+          <div style="font-size:16px;font-weight:700;color:var(--text-1);margin-bottom:4px">Legacy Responsive Web Design V8</div>
+          <div style="font-size:12px;color:var(--text-3)">Developer Certification · ~300 Stunden · Mai 2026</div>
+        </div>
+        <a
+          href="https://freecodecamp.org/certification/breachv3/responsive-web-design"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-p"
+          style="align-self:flex-start;font-size:13px;padding:8px 18px"
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Verifizieren
+        </a>
+      </div>
+
+      <div class="card" data-reveal style="padding:24px;display:flex;flex-direction:column;gap:16px">
+        <div style="overflow:hidden;border-radius:8px;border:1px solid var(--border)">
+          <img
+            src="legacy javascript algorithmus.png"
+            alt="freeCodeCamp – Legacy JavaScript Algorithms and Data Structures V7 Zertifikat"
+            style="width:100%;display:block;transition:transform .4s ease"
+            onmouseenter="this.style.transform='scale(1.03)'"
+            onmouseleave="this.style.transform='scale(1)'"
+          />
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:6px">freeCodeCamp</div>
+          <div style="font-size:16px;font-weight:700;color:var(--text-1);margin-bottom:4px">Legacy JavaScript Algorithms and Data Structures V7</div>
+          <div style="font-size:12px;color:var(--text-3)">Developer Certification · ~300 Stunden · Mai 2026</div>
+        </div>
+        <a
+          href="https://freecodecamp.org/certification/breachv3/javascript-algorithms-and-data-structures"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-p"
+          style="align-self:flex-start;font-size:13px;padding:8px 18px"
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Verifizieren
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="pad" style="background:var(--bg-secondary)">
   <div class="grid-bg"></div>
   <div class="inner">
     <div class="contact-grid">
@@ -556,22 +624,22 @@ const SKILLS = [
   { name:'React',       level:90, cat:'Frontend',  icon:'⚛',  color:'#61dafb' },
   { name:'JavaScript',  level:92, cat:'Language',  icon:'JS', color:'#f7df1e' },
   { name:'Node.js',     level:82, cat:'Backend',   icon:'⬡',  color:'#68a063' },
-  { name:'Python',      level:85, cat:'Language',  icon:'🐍', color:'#4b8bbe' },
-  { name:'Tailwind',    level:94, cat:'Frontend',  icon:'💨', color:'#38bdf8' },
-  { name:'Rust',        level:65, cat:'Systems',   icon:'🦀', color:'#f74c00' },
-  { name:'Lua',         level:78, cat:'Scripting', icon:'🌙', color:'#2d6db5' },
+  { name:'Python',      level:85, cat:'Language',  icon:'Py', color:'#4b8bbe' },
+  { name:'Tailwind',    level:94, cat:'Frontend',  icon:'TW', color:'#38bdf8' },
+  { name:'Rust',        level:65, cat:'Systems',   icon:'Rs', color:'#f74c00' },
+  { name:'Lua',         level:78, cat:'Scripting', icon:'Lu', color:'#2d6db5' },
   { name:'Three.js',    level:72, cat:'Frontend',  icon:'△',  color:'#049ef4' },
 ];
 
 const PROJECTS = [
   {
-    icon:'🛡', name:'CipherShell',
+    icon:'◈', name:'CipherShell',
     desc:'Modulares CLI-Framework für automatisierte Sicherheitsanalysen und Penetration Testing. Integriert verschiedene Scan-Module und exportiert strukturierte Reports.',
     tags:['Python','CLI','Security','Automation'],
     status:'In Entwicklung', statusColor:'#00d4ff',
   },
   {
-    icon:'🤖', name:'NexusBot',
+    icon:'◎', name:'NexusBot',
     desc:'Vollautomatisierter Bot-Framework für Discord und Telegram. Unterstützt Custom Commands, Moderation, Webhooks und ein Plugin-System für schnelle Erweiterbarkeit.',
     tags:['Node.js','Discord.js','Lua','Webhooks'],
     status:'Live', statusColor:'#00ff9d',

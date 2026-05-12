@@ -22,6 +22,7 @@
       --accent-g:     #00ff9d;
       --accent-glow:  rgba(0, 212, 255, 0.12);
       --text:         #e2e8f0;
+      --text-1:       #e2e8f0;
       --text-2:       rgba(226,232,240,0.58);
       --text-3:       rgba(226,232,240,0.30);
       --r:            12px;
@@ -237,6 +238,45 @@
     
     #skills { background: var(--bg-primary); }
     .skills-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
+
+    /* marquee */
+    .marquee-wrap {
+      overflow: hidden;
+      padding: 22px 0;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .marquee-wrap::before, .marquee-wrap::after {
+      content: '';
+      position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
+    }
+    .marquee-wrap::before { left: 0; background: linear-gradient(90deg, var(--bg-secondary), transparent); }
+    .marquee-wrap::after  { right: 0; background: linear-gradient(-90deg, var(--bg-secondary), transparent); }
+    .marquee-track {
+      display: flex; gap: 0;
+      width: max-content;
+      animation: marquee-scroll 28s linear infinite;
+    }
+    .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 0 32px;
+      font-size: 13px; font-weight: 500; letter-spacing: .04em;
+      color: var(--text-2);
+      white-space: nowrap;
+      transition: color .2s;
+    }
+    .marquee-item:hover { color: var(--accent); }
+    .marquee-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--accent); opacity: .35;
+    }
     @media (min-width: 768px)  { .skills-grid { grid-template-columns: repeat(4, 1fr); } }
 
     .skill-card { padding: 18px; cursor: default; transform-style: preserve-3d; will-change: transform; }
@@ -305,6 +345,65 @@
     footer .built span { color: var(--accent); }
 
     @media (max-width: 640px) { footer { padding: 28px 20px; justify-content: center; text-align: center; } }
+
+    /* ── depth: film grain ── */
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      opacity: .030;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── depth: card glass edge + layered shadow ── */
+    .card {
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.055),
+        0 2px 6px rgba(0,0,0,.30),
+        0 8px 32px rgba(0,0,0,.50);
+    }
+    .card:hover {
+      box-shadow:
+        inset 0 1px 0 rgba(0,212,255,.18),
+        0 0 0 1px rgba(0,212,255,.07),
+        0 0 36px rgba(0,212,255,.13),
+        0 28px 70px rgba(0,0,0,.62);
+    }
+
+    /* ── depth: section ambient glow blobs ── */
+    .inner { position: relative; z-index: 1; }
+    #about::before {
+      content: ''; position: absolute; pointer-events: none; z-index: 0;
+      width: 800px; height: 800px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,212,255,.052) 0%, transparent 62%);
+      top: -280px; right: -200px;
+    }
+    #skills::before {
+      content: ''; position: absolute; pointer-events: none; z-index: 0;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,255,157,.042) 0%, transparent 62%);
+      bottom: -200px; left: -180px;
+    }
+    #projects::before {
+      content: ''; position: absolute; pointer-events: none; z-index: 0;
+      width: 900px; height: 900px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,212,255,.040) 0%, transparent 62%);
+      top: -320px; right: -280px;
+    }
+    #certificates::before {
+      content: ''; position: absolute; pointer-events: none; z-index: 0;
+      width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,255,157,.036) 0%, transparent 62%);
+      bottom: -160px; left: -160px;
+    }
+    #contact::before {
+      content: ''; position: absolute; pointer-events: none; z-index: 0;
+      width: 800px; height: 800px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,212,255,.048) 0%, transparent 62%);
+      top: -200px; right: -220px;
+    }
+
+    /* ── depth: active nav link ── */
+    .nav-links a.nav-active { color: var(--accent); }
   </style>
 </head>
 <body>
@@ -360,7 +459,7 @@
     </div>
 
     <div class="hero-stats stagger" data-reveal>
-      <div data-reveal><div class="stat-val">3+</div><div class="stat-label">Jahre Erfahrung</div></div>
+      <div data-reveal><div class="stat-val">13+</div><div class="stat-label">Jahre Erfahrung</div></div>
       <div data-reveal><div class="stat-val">20+</div><div class="stat-label">Projekte</div></div>
       <div data-reveal><div class="stat-val">8+</div><div class="stat-label">Technologien</div></div>
     </div>
@@ -460,6 +559,10 @@
   </div>
 </section>
 
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee-track"></div>
+</div>
+
 <section id="projects" class="pad" style="background:var(--bg-secondary)">
   <div class="grid-bg"></div>
   <div class="inner">
@@ -531,6 +634,33 @@
         </div>
         <a
           href="https://freecodecamp.org/certification/breachv3/javascript-algorithms-and-data-structures"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-p"
+          style="align-self:flex-start;font-size:13px;padding:8px 18px"
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Verifizieren
+        </a>
+      </div>
+
+      <div class="card" data-reveal style="padding:24px;display:flex;flex-direction:column;gap:16px">
+        <div style="overflow:hidden;border-radius:8px;border:1px solid var(--border)">
+          <img
+            src="frontend development.png"
+            alt="freeCodeCamp – Front End Development Libraries Zertifikat"
+            style="width:100%;display:block;transition:transform .4s ease"
+            onmouseenter="this.style.transform='scale(1.03)'"
+            onmouseleave="this.style.transform='scale(1)'"
+          />
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:6px">freeCodeCamp</div>
+          <div style="font-size:16px;font-weight:700;color:var(--text-1);margin-bottom:4px">Front End Development Libraries</div>
+          <div style="font-size:12px;color:var(--text-3)">Developer Certification · ~300 Stunden · Mai 2026</div>
+        </div>
+        <a
+          href="https://freecodecamp.org/certification/breachv3/front-end-development-libraries"
           target="_blank"
           rel="noopener noreferrer"
           class="btn-p"
@@ -650,7 +780,31 @@ const PROJECTS = [
     tags:['React','Three.js','Node.js','Tailwind'],
     status:'Abgeschlossen', statusColor:'#a855f7',
   },
+  {
+    icon:'⬡', name:'BreachV3',
+    img:'breachv3.png',
+    desc:'Umfassendes Security Testing Tool mit 17 Modulen: Port Scanner, Network Scanner, SQLi/XSS-Tests, Hash Generator, Reverse Shell Generator, Payload Encoder und mehr – alles in einem interaktiven CLI-Interface.',
+    tags:['Python','CLI','Security','Pentesting'],
+    status:'Live', statusColor:'#00ff9d',
+  },
 ];
+
+(function renderMarquee() {
+  const track = document.getElementById('marquee-track');
+  if (!track) return;
+  const items = [
+    'React', 'JavaScript', 'TypeScript', 'Node.js', 'Python',
+    'Tailwind CSS', 'Rust', 'Lua', 'Three.js', 'HTML / CSS',
+    'Git', 'Linux', 'Cybersecurity', 'REST APIs', 'WebGL',
+  ];
+  // duplicate for seamless loop
+  [...items, ...items].forEach((name, i) => {
+    const el = document.createElement('span');
+    el.className = 'marquee-item';
+    el.innerHTML = name + (i < items.length * 2 - 1 ? '<span class="marquee-dot"></span>' : '');
+    track.appendChild(el);
+  });
+})();
 
 (function renderSkills() {
   const grid = document.getElementById('skills-grid');
@@ -689,6 +843,7 @@ const PROJECTS = [
     card.className = 'card proj-card';
     card.setAttribute('data-reveal','');
     card.innerHTML = `
+      ${p.img ? `<div style="overflow:hidden;border-radius:8px;border:1px solid var(--border);margin-bottom:16px"><img src="${p.img}" alt="${p.name} Screenshot" style="width:100%;display:block;transition:transform .4s ease" onmouseenter="this.style.transform='scale(1.03)'" onmouseleave="this.style.transform='scale(1)'"/></div>` : ''}
       <div class="proj-top">
         <div class="proj-icon">${p.icon}</div>
         <span class="proj-status" style="color:${p.statusColor};background:${p.statusColor}18;border:1px solid ${p.statusColor}30">${p.status}</span>
@@ -696,10 +851,6 @@ const PROJECTS = [
       <div class="proj-name">${p.name}</div>
       <div class="proj-desc">${p.desc}</div>
       <div class="proj-tags">${p.tags.map(t=>`<span class="proj-tag">${t}</span>`).join('')}</div>
-      <button class="proj-link">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        GitHub ansehen
-      </button>
     `;
     grid.appendChild(card);
   });
@@ -813,6 +964,28 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.10 });
 document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+// grid parallax
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  document.querySelectorAll('.grid-bg').forEach(g => {
+    g.style.backgroundPositionY = (y * 0.12) + 'px';
+  });
+}, { passive: true });
+
+// active nav highlight
+const _navSections = document.querySelectorAll('section[id]');
+const _navAs = document.querySelectorAll('.nav-links a');
+const _navObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      _navAs.forEach(a => a.classList.remove('nav-active'));
+      const hit = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if (hit) hit.classList.add('nav-active');
+    }
+  });
+}, { rootMargin: '-38% 0px -38% 0px' });
+_navSections.forEach(s => _navObserver.observe(s));
 
 document.getElementById('contact-form').addEventListener('submit', function(e) {
   e.preventDefault();

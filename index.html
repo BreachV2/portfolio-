@@ -343,6 +343,9 @@
     footer .copy { font-size: 11px; color: var(--text-3); }
     footer .built { font-size: 11px; color: var(--text-3); }
     footer .built span { color: var(--accent); }
+    footer .footer-links { display: flex; gap: 20px; }
+    footer .footer-links a { font-size: 11px; color: var(--text-3); text-decoration: none; transition: color .2s; }
+    footer .footer-links a:hover { color: var(--accent); }
 
     @media (max-width: 640px) { footer { padding: 28px 20px; justify-content: center; text-align: center; } }
 
@@ -825,6 +828,10 @@
   <a href="#" class="logo">&lt;BreachV3 /&gt;</a>
   <span class="copy">© 2026 BreachV3 — Alle Rechte vorbehalten</span>
   <span class="built">Gebaut mit <span>Three.js</span> &amp; <span>Vanilla JS</span></span>
+  <div class="footer-links">
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+  </div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

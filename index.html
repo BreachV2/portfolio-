@@ -407,14 +407,182 @@
 
     /* ── depth: active nav link ── */
     .nav-links a.nav-active { color: var(--accent); }
+
+    /* ══════════════════════════════════════════
+       SCROLL PROGRESS BAR
+    ══════════════════════════════════════════ */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px; z-index: 1001;
+      background: linear-gradient(90deg, var(--accent-g), var(--accent), var(--accent-g));
+      background-size: 200% 100%;
+      width: 0%; pointer-events: none;
+      box-shadow: 0 0 14px rgba(0,212,255,.65), 0 0 4px rgba(0,255,157,.4);
+      animation: pb-shimmer 3s linear infinite;
+    }
+    @keyframes pb-shimmer { 0%{background-position:0% 0%} 100%{background-position:200% 0%} }
+
+    /* ══════════════════════════════════════════
+       COMMAND PALETTE / SEARCH
+    ══════════════════════════════════════════ */
+    #cmd-overlay {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(2,6,13,.80);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 12vh;
+      opacity: 0; pointer-events: none;
+      transition: opacity .22s var(--ease);
+    }
+    #cmd-overlay.cmd-open { opacity: 1; pointer-events: all; }
+
+    #cmd-box {
+      width: min(640px, 92vw);
+      background: rgba(4,12,26,.98);
+      border: 1px solid rgba(0,212,255,.22);
+      border-radius: 16px;
+      box-shadow:
+        inset 0 1px 0 rgba(0,212,255,.10),
+        0 0 0 1px rgba(0,212,255,.05),
+        0 40px 90px rgba(0,0,0,.75),
+        0 0 70px rgba(0,212,255,.09);
+      overflow: hidden;
+      transform: translateY(-24px) scale(.96);
+      transition: transform .30s var(--ease);
+    }
+    #cmd-overlay.cmd-open #cmd-box { transform: translateY(0) scale(1); }
+
+    #cmd-search-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 18px 20px; border-bottom: 1px solid rgba(0,212,255,.10);
+    }
+    #cmd-search-icon { color: var(--text-3); flex-shrink: 0; }
+    #cmd-input {
+      flex: 1; background: none; border: none; outline: none;
+      color: var(--text); font-family: inherit; font-size: 15px;
+      caret-color: var(--accent);
+    }
+    #cmd-input::placeholder { color: var(--text-3); }
+    #cmd-esc-hint {
+      font-size: 10px; color: var(--text-3);
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09);
+      padding: 3px 8px; border-radius: 5px; flex-shrink: 0; letter-spacing:.04em;
+    }
+    #cmd-results { max-height: 340px; overflow-y: auto; padding: 8px; }
+    #cmd-results::-webkit-scrollbar { width: 4px; }
+    #cmd-results::-webkit-scrollbar-thumb { background: rgba(0,212,255,.18); border-radius: 3px; }
+
+    .cmd-group-label {
+      font-size: 10px; color: var(--text-3); letter-spacing: .10em;
+      text-transform: uppercase; padding: 8px 12px 4px; font-weight: 600;
+    }
+    .cmd-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 12px; border-radius: 8px; cursor: pointer;
+      transition: background .15s ease; user-select: none;
+    }
+    .cmd-item:hover, .cmd-item.cmd-sel { background: rgba(0,212,255,.09); }
+    .cmd-item-icon {
+      width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+      border: 1px solid rgba(0,212,255,.15);
+      background: rgba(0,212,255,.06); color: var(--accent);
+    }
+    .cmd-item-body { flex: 1; min-width: 0; }
+    .cmd-item-name { font-size: 13.5px; color: var(--text-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cmd-item-sub  { font-size: 11.5px; color: var(--text-3); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cmd-badge {
+      font-size: 10px; padding: 2px 8px; border-radius: 99px; flex-shrink: 0;
+      background: rgba(0,212,255,.10); color: var(--accent);
+      border: 1px solid rgba(0,212,255,.18); letter-spacing: .05em;
+    }
+    .cmd-badge.badge-skill   { background:rgba(0,255,157,.08);color:var(--accent-g);border-color:rgba(0,255,157,.18); }
+    .cmd-badge.badge-projekt { background:rgba(168,85,247,.08);color:#a855f7;border-color:rgba(168,85,247,.18); }
+    .cmd-badge.badge-cert    { background:rgba(251,191,36,.08);color:#fbbf24;border-color:rgba(251,191,36,.18); }
+    #cmd-footer {
+      padding: 10px 20px; border-top: 1px solid rgba(0,212,255,.08);
+      display: flex; gap: 20px; align-items: center;
+    }
+    .cmd-hint { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-3); }
+    .cmd-hint kbd {
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09);
+      padding: 2px 6px; border-radius: 4px; font-size: 10px; font-family: inherit;
+    }
+    .cmd-empty { padding: 40px 20px; text-align: center; font-size: 13px; color: var(--text-3); }
+    mark.cmd-hl { background: rgba(0,212,255,.20); color: var(--accent); border-radius: 2px; font-style: normal; }
+
+    /* ══════════════════════════════════════════
+       NAV SEARCH TRIGGER
+    ══════════════════════════════════════════ */
+    #cmd-open-btn {
+      display: flex; align-items: center; gap: 7px;
+      padding: 6px 13px; border-radius: 7px; cursor: pointer;
+      background: rgba(0,212,255,.05); border: 1px solid rgba(0,212,255,.14);
+      color: var(--text-3); font-family: inherit; font-size: 12px;
+      transition: all .2s ease; white-space: nowrap;
+    }
+    #cmd-open-btn:hover { border-color: rgba(0,212,255,.32); color: var(--text-2); background: rgba(0,212,255,.09); }
+    #cmd-open-btn .ck-badge {
+      font-size: 10px; opacity: .55;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10);
+      padding: 1px 6px; border-radius: 4px;
+    }
+    @media (max-width: 900px) { #cmd-open-btn .cmd-label, #cmd-open-btn .ck-badge { display: none; } }
+    @media (max-width: 768px) { #cmd-open-btn { padding: 6px; } }
+
+    /* ══════════════════════════════════════════
+       IMMERSIVE PARALLAX
+    ══════════════════════════════════════════ */
+    #hero-canvas, .hero-content, .scroll-ind { will-change: transform; }
+
+    /* ══════════════════════════════════════════
+       MAGNETIC BUTTONS
+    ══════════════════════════════════════════ */
+    .btn-p, .btn-s { will-change: transform; }
+
+    /* ══════════════════════════════════════════
+       STAT COUNTER ANIMATION
+    ══════════════════════════════════════════ */
+    .stat-underline {
+      display: block; height: 2px; width: 0%; border-radius: 1px;
+      background: var(--accent); margin-top: 5px;
+      transition: width .9s cubic-bezier(0.16,1,0.3,1) .4s;
+    }
+    .stat-val.counting .stat-underline { width: 100%; }
   </style>
 </head>
 <body>
 
+<div id="scroll-progress"></div>
 <div class="cursor-glow" id="cg"></div>
+
+<!-- ── Command Palette ── -->
+<div id="cmd-overlay" role="dialog" aria-modal="true" aria-label="Portfolio-Suche">
+  <div id="cmd-box">
+    <div id="cmd-search-row">
+      <span id="cmd-search-icon">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </span>
+      <input id="cmd-input" type="text" placeholder="Suche nach Sektionen, Projekten, Skills …" autocomplete="off" spellcheck="false" />
+      <span id="cmd-esc-hint">ESC</span>
+    </div>
+    <div id="cmd-results"></div>
+    <div id="cmd-footer">
+      <span class="cmd-hint"><kbd>↑↓</kbd> Navigieren</span>
+      <span class="cmd-hint"><kbd>↵</kbd> Öffnen</span>
+      <span class="cmd-hint"><kbd>Esc</kbd> Schließen</span>
+    </div>
+  </div>
+</div>
 
 <nav id="nav">
   <a href="#" class="nav-logo">&lt;BreachV3 /&gt;</a>
+  <button id="cmd-open-btn" aria-label="Suche öffnen (Ctrl+K)">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <span class="cmd-label">Suchen</span>
+    <span class="ck-badge">Ctrl K</span>
+  </button>
   <button class="burger" id="burger" aria-label="Menü öffnen">
     <span></span><span></span><span></span>
   </button>
@@ -462,9 +630,9 @@
     </div>
 
     <div class="hero-stats stagger" data-reveal>
-      <div data-reveal><div class="stat-val">13+</div><div class="stat-label">Jahre Erfahrung</div></div>
-      <div data-reveal><div class="stat-val">20+</div><div class="stat-label">Projekte</div></div>
-      <div data-reveal><div class="stat-val">8+</div><div class="stat-label">Technologien</div></div>
+      <div data-reveal><div class="stat-val" data-target="13">13+<span class="stat-underline"></span></div><div class="stat-label">Jahre Erfahrung</div></div>
+      <div data-reveal><div class="stat-val" data-target="20">20+<span class="stat-underline"></span></div><div class="stat-label">Projekte</div></div>
+      <div data-reveal><div class="stat-val" data-target="8">8+<span class="stat-underline"></span></div><div class="stat-label">Technologien</div></div>
     </div>
   </div>
 
@@ -1113,6 +1281,284 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
   msg.style.display = 'block';
   this.reset();
 });
+
+/* ════════════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+════════════════════════════════════════════════════ */
+(function() {
+  const bar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', function() {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+  }, { passive: true });
+})();
+
+/* ════════════════════════════════════════════════════
+   IMMERSIVE PARALLAX
+════════════════════════════════════════════════════ */
+(function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const heroCanvas  = document.getElementById('hero-canvas');
+  const heroContent = document.querySelector('.hero-content');
+  const scrollInd   = document.querySelector('.scroll-ind');
+
+  window.addEventListener('scroll', function() {
+    const y  = window.scrollY;
+    const vh = window.innerHeight;
+    if (y > vh * 1.4) return;
+
+    // Canvas (bg) moves slower → depth illusion
+    if (heroCanvas)  heroCanvas.style.transform  = `translateY(${y * 0.20}px)`;
+    // Content rises gently
+    if (heroContent) heroContent.style.transform = `translateY(${y * 0.10}px)`;
+    // Scroll indicator fades
+    if (scrollInd)   scrollInd.style.opacity     = Math.max(0, 1 - y / (vh * 0.32));
+  }, { passive: true });
+})();
+
+/* ════════════════════════════════════════════════════
+   COUNTER ANIMATION
+════════════════════════════════════════════════════ */
+(function() {
+  const stats    = document.querySelectorAll('.stat-val[data-target]');
+  let animated   = false;
+  if (!stats.length) return;
+
+  const obs = new IntersectionObserver(function(entries) {
+    if (!entries[0].isIntersecting || animated) return;
+    animated = true;
+
+    stats.forEach(function(el) {
+      const target = parseInt(el.dataset.target, 10);
+      const underline = el.querySelector('.stat-underline');
+      el.classList.add('counting');
+      if (underline) underline; // trigger CSS transition
+
+      let start = null;
+      const dur = 1700;
+
+      function step(ts) {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 4);
+        // Keep underline span intact
+        el.childNodes[0].nodeValue = Math.floor(eased * target) + '+';
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, { threshold: 0.6 });
+
+  obs.observe(document.querySelector('.hero-stats'));
+})();
+
+/* ════════════════════════════════════════════════════
+   SKILL BAR ANIMATIONS
+════════════════════════════════════════════════════ */
+(function() {
+  setTimeout(function() {
+    // Capture target widths, reset to 0
+    document.querySelectorAll('.bar-fg').forEach(function(bar) {
+      bar.dataset.w = bar.style.width;
+      bar.style.width = '0';
+      bar.style.transition = 'width 1.15s cubic-bezier(0.16,1,0.3,1) .1s';
+    });
+
+    const obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (!e.isIntersecting) return;
+        e.target.querySelectorAll('.bar-fg').forEach(function(bar) {
+          bar.style.width = bar.dataset.w;
+        });
+        obs.unobserve(e.target);
+      });
+    }, { threshold: 0.35 });
+
+    document.querySelectorAll('.skill-card').forEach(function(card) {
+      obs.observe(card);
+    });
+  }, 150);
+})();
+
+/* ════════════════════════════════════════════════════
+   MAGNETIC BUTTONS
+════════════════════════════════════════════════════ */
+(function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('.btn-p, .btn-s').forEach(function(btn) {
+    btn.addEventListener('mousemove', function(e) {
+      const r = btn.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width  - 0.5) * 14;
+      const y = ((e.clientY - r.top)  / r.height - 0.5) * 10;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    btn.addEventListener('mouseleave', function() {
+      btn.style.transform = 'translate(0,0)';
+    });
+  });
+})();
+
+/* ════════════════════════════════════════════════════
+   COMMAND PALETTE / SPOTLIGHT SEARCH
+════════════════════════════════════════════════════ */
+(function() {
+  const INDEX = [
+    // ── Sections
+    { type:'section', icon:'◈', name:'Über mich',       sub:'Wer steckt hinter BreachV3?',               href:'#about',        badge:'Sektion' },
+    { type:'section', icon:'⚙', name:'Skills',           sub:'React · JS · Python · Rust · Tailwind …',   href:'#skills',       badge:'Sektion' },
+    { type:'section', icon:'◉', name:'Projekte',         sub:'CipherShell · NexusBot · PortalUI …',       href:'#projects',     badge:'Sektion' },
+    { type:'section', icon:'✦', name:'Zertifikate',      sub:'7 freeCodeCamp Developer Certifications',   href:'#certificates', badge:'Sektion' },
+    { type:'section', icon:'✉', name:'Kontakt',          sub:'Projektanfragen & Kooperationen',            href:'#contact',      badge:'Sektion' },
+    // ── Projects
+    { type:'project', icon:'◈', name:'CipherShell',      sub:'CLI-Framework für Sicherheitsanalysen · Python · Security',   href:'#projects', badge:'Projekt' },
+    { type:'project', icon:'◎', name:'NexusBot',         sub:'Discord & Telegram Bot-Framework · Node.js · Lua',            href:'#projects', badge:'Projekt' },
+    { type:'project', icon:'◉', name:'PortalUI',         sub:'Admin-Dashboard mit 3D-Visualisierung · React · Three.js',   href:'#projects', badge:'Projekt' },
+    { type:'project', icon:'⬡', name:'BreachV3 Tool',    sub:'Security Testing Tool mit 17 Modulen · Python · Pentesting', href:'#projects', badge:'Projekt' },
+    // ── Skills
+    { type:'skill', icon:'⚛', name:'React',              sub:'Frontend · 90 %', href:'#skills', badge:'Skill' },
+    { type:'skill', icon:'JS',name:'JavaScript',          sub:'Language · 92 %', href:'#skills', badge:'Skill' },
+    { type:'skill', icon:'⬡', name:'Node.js',            sub:'Backend · 82 %',  href:'#skills', badge:'Skill' },
+    { type:'skill', icon:'Py',name:'Python',              sub:'Language · 85 %', href:'#skills', badge:'Skill' },
+    { type:'skill', icon:'TW',name:'Tailwind CSS',        sub:'Frontend · 94 %', href:'#skills', badge:'Skill' },
+    { type:'skill', icon:'Rs',name:'Rust',                sub:'Systems · 65 %',  href:'#skills', badge:'Skill' },
+    { type:'skill', icon:'Lu',name:'Lua',                 sub:'Scripting · 78 %',href:'#skills', badge:'Skill' },
+    { type:'skill', icon:'△', name:'Three.js',            sub:'Frontend · 72 %', href:'#skills', badge:'Skill' },
+    // ── Certificates
+    { type:'cert', icon:'★', name:'Responsive Web Design',             sub:'freeCodeCamp · ~300 h · Mai 2026', href:'#certificates', badge:'Zertifikat' },
+    { type:'cert', icon:'★', name:'JavaScript Algorithms & DS',        sub:'freeCodeCamp · ~300 h · Mai 2026', href:'#certificates', badge:'Zertifikat' },
+    { type:'cert', icon:'★', name:'Front End Development Libraries',   sub:'freeCodeCamp · ~300 h · Mai 2026', href:'#certificates', badge:'Zertifikat' },
+    { type:'cert', icon:'★', name:'Machine Learning with Python',      sub:'freeCodeCamp · ~300 h · Mai 2026', href:'#certificates', badge:'Zertifikat' },
+    { type:'cert', icon:'★', name:'Data Analysis with Python',         sub:'freeCodeCamp · ~300 h · Mai 2026', href:'#certificates', badge:'Zertifikat' },
+    { type:'cert', icon:'★', name:'Scientific Computing with Python',  sub:'freeCodeCamp · ~300 h · Mai 2026', href:'#certificates', badge:'Zertifikat' },
+    { type:'cert', icon:'★', name:'Data Visualization V8',             sub:'freeCodeCamp · ~300 h · Mai 2026', href:'#certificates', badge:'Zertifikat' },
+  ];
+
+  const BADGE_CLASS = { 'Skill':'badge-skill', 'Projekt':'badge-projekt', 'Zertifikat':'badge-cert' };
+
+  const overlay  = document.getElementById('cmd-overlay');
+  const input    = document.getElementById('cmd-input');
+  const results  = document.getElementById('cmd-results');
+  const openBtn  = document.getElementById('cmd-open-btn');
+
+  let filtered = [];
+  let selIdx   = -1;
+
+  function open() {
+    overlay.classList.add('cmd-open');
+    input.value = '';
+    render('');
+    setTimeout(function() { input.focus(); }, 40);
+  }
+
+  function close() {
+    overlay.classList.remove('cmd-open');
+    input.blur();
+  }
+
+  function hl(text, q) {
+    if (!q) return text;
+    const i = text.toLowerCase().indexOf(q.toLowerCase());
+    if (i < 0) return text;
+    return text.slice(0, i)
+      + '<mark class="cmd-hl">' + text.slice(i, i + q.length) + '</mark>'
+      + text.slice(i + q.length);
+  }
+
+  function render(query) {
+    const q = query.trim().toLowerCase();
+    filtered = q
+      ? INDEX.filter(function(it) {
+          return it.name.toLowerCase().includes(q)
+              || it.sub.toLowerCase().includes(q)
+              || it.type.toLowerCase().includes(q)
+              || it.badge.toLowerCase().includes(q);
+        })
+      : INDEX.filter(function(it) { return it.type === 'section'; });
+
+    selIdx = filtered.length ? 0 : -1;
+
+    if (!filtered.length) {
+      results.innerHTML = '<div class="cmd-empty">Keine Ergebnisse für „' + query + '"</div>';
+      return;
+    }
+
+    // Group by badge
+    var groups = Object.create(null);
+    filtered.forEach(function(it, idx) {
+      if (!groups[it.badge]) groups[it.badge] = [];
+      groups[it.badge].push({ item: it, idx: idx });
+    });
+
+    results.innerHTML = Object.keys(groups).map(function(label) {
+      var items = groups[label];
+      return '<div class="cmd-group-label">' + label + '</div>'
+        + items.map(function(entry) {
+            var bclass = BADGE_CLASS[entry.item.badge] || '';
+            return '<div class="cmd-item' + (entry.idx === 0 ? ' cmd-sel' : '') + '" data-idx="' + entry.idx + '">'
+              + '<div class="cmd-item-icon">' + entry.item.icon + '</div>'
+              + '<div class="cmd-item-body">'
+              +   '<div class="cmd-item-name">' + hl(entry.item.name, q) + '</div>'
+              +   '<div class="cmd-item-sub">'  + entry.item.sub + '</div>'
+              + '</div>'
+              + '<span class="cmd-badge ' + bclass + '">' + entry.item.badge + '</span>'
+              + '</div>';
+          }).join('');
+    }).join('');
+
+    updateSel();
+
+    results.querySelectorAll('.cmd-item').forEach(function(el) {
+      el.addEventListener('click', function() { navigate(+el.dataset.idx); });
+      el.addEventListener('mouseenter', function() { selIdx = +el.dataset.idx; updateSel(); });
+    });
+  }
+
+  function updateSel() {
+    results.querySelectorAll('.cmd-item').forEach(function(el) {
+      el.classList.toggle('cmd-sel', +el.dataset.idx === selIdx);
+    });
+    var sel = results.querySelector('.cmd-sel');
+    if (sel) sel.scrollIntoView({ block: 'nearest' });
+  }
+
+  function navigate(idx) {
+    var it = filtered[idx];
+    if (!it) return;
+    close();
+    var target = document.querySelector(it.href);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  input.addEventListener('input', function(e) { render(e.target.value); });
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      selIdx = Math.min(selIdx + 1, filtered.length - 1);
+      updateSel();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      selIdx = Math.max(selIdx - 1, 0);
+      updateSel();
+    } else if (e.key === 'Enter') {
+      navigate(selIdx);
+    } else if (e.key === 'Escape') {
+      close();
+    }
+  });
+
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
+  openBtn.addEventListener('click', open);
+
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      overlay.classList.contains('cmd-open') ? close() : open();
+    }
+    if (e.key === 'Escape' && overlay.classList.contains('cmd-open')) close();
+  });
+})();
 </script>
 </body>
 </html>
